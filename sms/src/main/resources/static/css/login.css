@@ -1,0 +1,130 @@
+/* General reset for margin, padding, and box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('/images/login.jpg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent repeating the image */
+    background-size: cover; /* Make the image cover the entire viewport */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+
+/* Login box container */
+.login-box {
+    background-color: #fff;
+    padding: 40px; /* Increased padding for more spacing */
+    border-radius: 15px; /* Rounded corners for a modern look */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); /* Enhanced shadow for depth */
+    width: 100%;
+    max-width: 600px; /* Increased max width for a larger box */
+    text-align: center;
+}
+
+/* Heading */
+.login-box h2 {
+    font-size: 28px; /* Larger font size */
+    margin-bottom: 30px; /* Increased spacing below the heading */
+    color: #333;
+}
+
+/* Input group styling */
+.input-group {
+    margin-bottom: 25px; /* Increased spacing between input fields */
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 16px; /* Larger label font */
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px; /* Larger input padding */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Rounded input fields */
+    font-size: 16px; /* Larger text inside inputs */
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Button group styling */
+.button-group {
+    margin-top: 20px;
+}
+
+.login-btn {
+    background-color: #9932CC;
+    color: #fff;
+    padding: 12px 25px; /* Larger button size */
+    border: none;
+    border-radius: 8px;
+    font-size: 18px; /* Increased font size for the button */
+    cursor: pointer;
+    width: 100%; /* Button spans the full width */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-btn:hover {
+    background-color: #800080;
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Additional options styling */
+.additional-options {
+    margin-top: 20px;
+    font-size: 16px; /* Increased font size */
+}
+
+.additional-options a {
+    color: #9932CC;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.additional-options a:hover {
+    color: #800080;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #800080; /* Primary blue background */
+    color: white; /* White text color */
+        padding: 15px 20px; /* Padding for spacing */
+        display: flex; /* Use flexbox for layout */
+        align-items: center; /* Vertically center the content */
+        justify-content: center; /* Spread content across the navbar */
+        position: fixed; /* Stick the navbar to the top */
+        top: 0; /* Ensure it's at the very top */
+        width: 100%; /* Span the full width of the screen */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        z-index: 1000; /* Ensure it stays above other elements */
+
+}
+
+/* Navbar title */
+.navbar h1 {
+    font-size: 26px; /* Size of the title */
+    font-weight: bold; /* Bold font */
+    margin: 0; /* No margin around the heading */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1px; /* Adds some spacing between letters */
+}

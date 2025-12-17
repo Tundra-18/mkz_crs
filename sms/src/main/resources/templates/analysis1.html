@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Ranking System</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <link rel="stylesheet" th:href="@{/css/analysis1.css}">
+</head>
+<body>
+
+<!-- Home Page Container -->
+<div class="home-container">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/addcustomer">Add Customer</a></li>
+        <li><a href="/customerlist">Customer List</a></li>
+        <li><a href="/analysis">Analysis</a></li>
+        <li><a href="/report">Report</a></li>
+    </ul>
+  </nav>
+
+  <div class="container mt-5">
+    <h1>Analysis</h1>
+    <!-- Bar Chart for Product Category -->
+    <div class="charts-wrapper">
+      <div class="chart-container">
+        <h2>Product Quality</h2>
+        <canvas id="qualityPieChart" width="400" height="200"></canvas>
+      </div>
+      <div class="chart-container">
+        <h2>Product Category</h2>
+        <canvas id="categoryPieChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+
+    <!-- JavaScript to fRender Charts -->
+    <script th:inline="javascript">
+      // Extract data from Thymeleaf model
+      const categoryData = [[${categoryCount}]];
+      const qualityData = [[${qualityCount}]];
+      const ratingData = [[${ratingCount}]];
+
+      // Render Product Quality Chart (Pie Chart)
+      const qualityPieCtx = document.getElementById('qualityPieChart').getContext('2d');
+      new Chart(qualityPieCtx, {
+          type: 'pie',
+          data: {
+              labels: Object.keys(qualityData),
+              datasets: [{
+                  label: 'Number of Suppliers',
+                  data: Object.values(qualityData),
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.6)', // Red
+                      'rgba(54, 162, 235, 0.6)', // Blue
+                      'rgba(255, 206, 86, 0.6)', // Yellow
+                      'rgba(75, 192, 192, 0.6)', // Green
+                      'rgba(153, 102, 255, 0.6)', // Purple
+                      'rgba(255, 159, 64, 0.6)'  // Orange
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: true, // ensures the aspect ratio is maintained
+              plugins: {
+                  legend: {
+                      position: 'left',
+                  },
+                  datalabels: {
+                      formatter: (value, ctx) => {
+                          let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                          let percentage = (value * 100 / sum).toFixed(2) + "%";
+                          return percentage;
+                      },
+                      color: '#fff', // Label text color
+                      font: {
+                          size: 14, // Label font size
+                          weight: 'bold' // Label font weight
+                      }
+                  }
+              }
+          },
+          plugins: [ChartDataLabels] // Add the plugin here
+      });
+
+      // Render Product Category Chart (Pie Chart)
+      const categoryPieCtx = document.getElementById('categoryPieChart').getContext('2d');
+      new Chart(categoryPieCtx, {
+          type: 'pie',
+          data: {
+              labels: Object.keys(categoryData),
+              datasets: [{
+                  label: 'Number of Suppliers',
+                  data: Object.values(categoryData),
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.6)',   // Red
+                      'rgba(54, 162, 235, 0.6)',   // Blue
+                      'rgba(255, 206, 86, 0.6)',   // Yellow
+                      'rgba(75, 192, 192, 0.6)',   // Green
+                      'rgba(153, 102, 255, 0.6)',  // Purple
+                      'rgba(255, 159, 64, 0.6)',   // Orange
+                      'rgba(0, 128, 128, 0.6)',    // Teal
+                      'rgba(128, 0, 128, 0.6)'     // Dark Purple
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)',
+                      'rgba(0, 128, 128, 1)',
+                      'rgba(128, 0, 128, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              responsive: true,
+              maintainAspectRatio: true, // ensures the aspect ratio is maintained
+              plugins: {
+                  legend: {
+                      position: 'left',
+                  },
+                  datalabels: {
+                      formatter: (value, ctx) => {
+                          let sum = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                          let percentage = (value * 100 / sum).toFixed(2) + "%";
+                          return percentage;
+                      },
+                      color: '#fff', // Label text color
+                      font: {
+                          size: 14, // Label font size
+                          weight: 'bold' // Label font weight
+                      }
+                  }
+              }
+          },
+          plugins: [ChartDataLabels] // Add the plugin here
+      });
+    </script>
+    <div class="next-page-btn">
+      <a href="/analysis"><button class="btn">Previous Page</button></a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

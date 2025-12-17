@@ -1,0 +1,308 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f6f2f8; /* soft purple background */
+    padding: 50px;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 45px;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(128, 0, 128, 0.15);
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+h1 {
+    background-color: #6a1b9a; /* purple header */
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* Search Bar */
+.search-bar {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 5px;
+    border: 1px solid #d1c4e9;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.search-bar:focus {
+    border-color: #9c27b0;
+    outline: none;
+}
+
+/* Table */
+.supplier-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+}
+
+.supplier-table th,
+.supplier-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+}
+
+.supplier-table th {
+    background-color: #800080;
+    color: white;
+}
+
+.supplier-table tbody tr:nth-child(even) {
+    background-color: #f3e5f5;
+}
+
+.supplier-table tbody tr:hover {
+    background-color: #ede7f6;
+    cursor: pointer;
+}
+
+.supplier-table td {
+    word-wrap: break-word;
+    max-width: 150px;
+}
+
+/* Popup overlay */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(74, 0, 114, 0.5);
+    z-index: 1000;
+}
+
+/* Popup content */
+.popup-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 1000px;
+    box-shadow: 0 8px 16px rgba(128, 0, 128, 0.3);
+    z-index: 1001;
+}
+
+.popup-content h2 {
+    margin-bottom: 25px;
+    font-size: 24px;
+    text-align: center;
+    color: #4a148c;
+}
+
+/* Form */
+#supplierForm {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #4a148c;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 8px;
+    border: 1px solid #d1c4e9;
+    border-radius: 5px;
+    height: 40px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #9c27b0;
+    outline: none;
+}
+
+/* Form actions */
+.form-actions {
+    grid-column: span 3;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form-actions button {
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.form-actions button[type="submit"] {
+    background-color: #800080;
+}
+
+.form-actions button[type="submit"]:hover {
+    background-color: #4a0072;
+}
+
+.form-actions button[type="button"] {
+    background-color: #6a1b9a;
+}
+
+.form-actions button[type="button"]:hover {
+    background-color: #4a148c;
+}
+
+/* Close button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #8e24aa;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.close-btn:hover {
+    background: #4a0072;
+}
+
+/* Action Buttons */
+button {
+    padding: 6px 12px;
+    background-color: #8e24aa;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+button:hover {
+    background-color: #4a0072;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+button.update-button {
+    background-color: #6a1b9a;
+}
+
+button.update-button:hover {
+    background-color: #4a148c;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    background-color: #800080;
+    padding: 20px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(128, 0, 128, 0.4);
+}
+
+.navbar ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding-left: 10px;
+    gap: 15px;
+}
+
+.navbar li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar li a:hover {
+    background-color: #4a0072;
+    transform: scale(1.05);
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .navbar li a {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+}
+
+/* Scrollable Table Body */
+.supplier-table thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    background-color: #ede7f6;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.supplier-table tbody {
+    display: block;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.supplier-table tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+#productQuality,
+#productCategory {
+    background-color: white;
+}

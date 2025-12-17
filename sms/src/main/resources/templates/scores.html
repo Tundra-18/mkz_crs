@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Scores</title>
+</head>
+<body>
+
+<h1>Supplier Scores</h1>
+
+<!-- Table to display supplier scores -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Product Category</th>
+        <th>Product Quality</th>
+        <th>Rating</th>
+        <th>Price Difference</th>
+        <th>Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="supplier : ${suppliers}">
+        <td th:text="${supplier.id}"></td>
+        <td th:text="${supplier.name}"></td>
+        <td th:text="${supplier.productCategory}"></td>
+        <td th:text="${supplier.productQuality}"></td>
+        <td th:text="${supplier.rating}"></td>
+        <td th:text="'$' + ${supplier.minPrice} + ' - ' + ${supplier.maxPrice}"></td>
+        <td th:text="${supplier?.score}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
