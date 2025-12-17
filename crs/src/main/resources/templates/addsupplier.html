@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Supplier Form</title>
+    <link rel="stylesheet" th:href="@{/css/addsupplier.css}">
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/addsupplier">Add Supplier</a></li>
+            <li><a href="/supplierlist">Supplier List</a></li>
+            <li><a href="/analysis">Analysis</a></li>
+            <li><a href="/report">Report</a></li>
+        </ul>
+    </nav>
+    <h1>Add New Supplier</h1>
+    <form id="productForm" th:action="@{/submitSupplier}" th:object="${supplier}" method="post" onsubmit="return validatePrices()">
+        <div class="form-grid">
+            <div class="form-item">
+                <label for="supplierName">Supplier Name</label>
+                <input type="text" th:field="*{name}" id="supplierName" name="supplierName" placeholder="Enter Supplier Name" required>
+            </div>
+
+            <div class="form-item">
+                <label for="productCategory">Product Category</label>
+                <select id="productCategory" name="productCategory" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Food & Beverage">Food & Beverage</option>
+                    <option value="Pharmacy">Pharmacy</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Furniture">Furniture</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Grocery">Grocery</option>
+                    <option value="Toys">Toys</option>
+                </select>
+            </div>
+
+            <div class="form-item">
+                <label for="productQuality">Product Quality</label>
+                <select id="productQuality" name="productQuality">
+                    <option value="" selected disabled>Select Quality</option>
+                    <option value="Very Low">Very Low</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="High End">High End</option>
+                </select>
+            </div>
+
+            <div class="form-item">
+                <label for="supplierRating">Product Rating</label>
+                <input id="supplierRating" type="number" th:field="*{supplierRating}"
+                       min="0" max="10" value="0" step="0.1" placeholder="Set Rating"
+                       onblur="enforceRatingRange(this)">
+            </div>
+
+            <div class="form-item">
+                <label for="minPrice">Minimum Price (Ks)</label>
+                <input type="text" id="minPrice" th:field="*{minPrice}"
+                       name="minPrice" placeholder="Enter Minimum Price" required
+                       oninput="validatePrices()" onkeydown="return restrictToNumbers(event)">
+            </div>
+
+            <div class="form-item">
+                <label for="maxPrice">Maximum Price (Ks)</label>
+                <input type="text" id="maxPrice" th:field="*{maxPrice}"
+                       name="maxPrice" placeholder="Enter Maximum Price" required
+                       oninput="validatePrices()" onkeydown="return restrictToNumbers(event)">
+                <span id="priceError" style="color: red; display: none;">Max Price must be greater than Min Price.</span>
+            </div>
+
+            <div class="form-item">
+                <label for="email">Email</label>
+                <input type="email" id="email" th:field="*{email}" name="email" placeholder="Enter Supplier Email" required>
+            </div>
+
+            <div class="form-item">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" th:field="*{phone}" name="phone" placeholder="Enter Supplier Phone" required>
+            </div>
+
+            <div class="form-item">
+                <label for="address">Address</label>
+                <textarea id="address" th:field="*{supplierAddress}" name="address" placeholder="Enter Supplier Address" required></textarea>
+            </div>
+
+            <!-- New Import Button to trigger CSV file selection -->
+            <div class="full-width">
+                <button type="button" id="importButton">Import (csv)</button>
+                <input type="file" id="csvFile" name="csvFile" accept=".csv" style="display:none">
+                <button type="submit">Add</button>
+                <button type="reset">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function enforceRatingRange(input) {
+        const min = 0.1; // Minimum allowed value
+        const max = 10.0; // Maximum allowed value
+
+        // Parse the input value as a float
+        let value = parseFloat(input.value);
+
+        // Check if the value is less than 0.1 or greater than 10
+        if (isNaN(value) || value < min) {
+            input.value = min; // Reset to 0.1 if less than 0.1 or invalid
+        } else if (value > max) {
+            input.value = max; // Reset to 10 if greater than 10
+        }
+    }
+
+    const importButton = document.getElementById("importButton");
+    const csvFile = document.getElementById("csvFile");
+
+    // Trigger file selection dialog
+    importButton.addEventListener("click", () => csvFile.click());
+
+    // Handle file selection and upload
+    csvFile.addEventListener("change", () => {
+        const file = csvFile.files[0]; // Get the selected file
+
+        // Validate file before uploading
+        if (!file) {
+            alert("No file selected!");
+            return;
+        }
+
+        if (!file.name.endsWith(".csv")) {
+            alert("Please select a valid CSV file.");
+            return;
+        }
+
+        if (file.size > 2 * 1024 * 1024) { // Limit file size to 2MB
+            alert("File size exceeds 2MB. Please choose a smaller file.");
+            return;
+        }
+
+        // Prepare the file for upload
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Upload the file using Fetch API
+        fetch("/import", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error("Failed to upload the file. Please try again.");
+                }
+            })
+            .then(result => alert(result))
+            .catch(error => alert("Error: " + error.message));
+    });
+
+    // Validate that maxPrice is greater than minPrice
+    function validatePrices() {
+        const minPrice = parseFloat(document.getElementById("minPrice").value);
+        const maxPrice = parseFloat(document.getElementById("maxPrice").value);
+        const priceError = document.getElementById("priceError");
+
+        if (isNaN(minPrice) || isNaN(maxPrice)) {
+            priceError.style.display = "none"; // Hide error if inputs are not numbers
+            return true; // Allow form submission (let HTML5 validation handle it)
+        }
+
+        if (maxPrice <= minPrice) {
+            priceError.style.display = "inline"; // Show error message
+            return false; // Prevent form submission
+        } else {
+            priceError.style.display = "none"; // Hide error message
+            return true; // Allow form submission
+        }
+    }
+
+    // Restrict input to numbers and optional decimal points
+    function restrictToNumbers(event) {
+        // Allow: backspace, delete, tab, escape, enter, and decimal point
+        if ([46, 8, 9, 27, 13, 110, 190].includes(event.keyCode) ||
+            // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+            (event.ctrlKey === true && [65, 67, 86, 88].includes(event.keyCode)) ||
+            // Allow: home, end, left arrow, right arrow
+            (event.keyCode >= 35 && event.keyCode <= 39)) {
+            return;
+        }
+
+        // Ensure it is a number or a single decimal point
+        if ((event.shiftKey || (event.keyCode < 48 || event.keyCode > 57)) &&
+            (event.keyCode < 96 || event.keyCode > 105) && event.keyCode !== 190) {
+            event.preventDefault(); // Prevent non-numeric input
+        }
+    }
+
+    // Handle form submission
+    document.getElementById("productForm").addEventListener("submit", function(event) {
+        if (!validatePrices()) {
+            event.preventDefault(); // Prevent form submission if validation fails
+            return;
+        }
+
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(this);
+
+        fetch(this.action, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Supplier Successfully Added!");
+                this.reset(); // Reset the form after successful submission
+            } else {
+                throw new Error("Supplier with the same name and same category already exists!");
+            }
+        })
+        .catch(error => alert("Error: " + error.message));
+    });
+</script>
+
+</body>
+</html>

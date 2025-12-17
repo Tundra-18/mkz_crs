@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Management System</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+
+<!-- Home Page Container -->
+<div class="home-container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/addsupplier">Add Supplier</a></li>
+            <li><a href="/supplierlist">Supplier List</a></li>
+            <li><a href="/analysis">Analysis</a></li>
+            <li><a href="/report">Report</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="home-content">
+        <h1>Welcome to the Supplier Management System</h1><br>
+        <p>Portal Administrators များအား အကြောင်းကြားစာ
+            <br>
+            <br>
+
+            ကျေးဇူးပြု၍ Tundra Supermarket ၏ Supplier Management System (ပေးသွင်းသူ စီမံခန့်ခွဲမှုစနစ်) အတွင်းရှိ ပေးသွင်းသူဆိုင်ရာ ဒေတာအား စဉ်ဆက်မပြတ် ပြင်ဆင်သိမ်းဆည်းထားရန် အထူးဂရုစိုက်ပေးပါရန်။
+            ဒေတာအပြည့်အစုံကို စနစ်တကျ ပြန်လည်ဆန်းစစ်ရန်နှင့် ပြုပြင်ထားရန်လိုအပ်ပါသည်။ ယေဘုယျစဉ်ဆက်မပြတ်သောဆက်သွယ်မှုရပ်ကွက်အတွက် ပြုပြင်ခြင်းရှိနိုင်သော အချက်အလက်များကတဆင့် ထိန်းချုပ်ရေးလုပ်ဆောင်မှုဆိုင်ရာအခက်အခဲကို ချက်ချင်းသတိပေးပါရန် နှင့် ပေးသွင်းသူနှင့် ချက်ချင်းဆက်သွယ်ရပါမည်။
+            <br>
+            ယင်းအား အစဉ်အဆက် သတ်မှတ်စနစ်အတိအကျနှင့် ဆောင်ရွက်ပြီး မိမိလုပ်ငန်းစဉ် အဆင့်မြှင့်တင်စေရန် ပေးသွင်းသူအားမှန်ကန်မှုပြုလုပ်မည် ဖြစ်ပါသည်။
+            <br><br>
+            ( Remark :       : Supplier အများစုအား Zoom Link ဖြင့် Demo Section အား ပြုလုပ်ပေးပြီးဖြစ်ပြီး ကျန်ရှိနေသေးသည့် supplier များအား 21/01/2025 နေ့အထိ zoom link ဖြင့် Demo Section အား ထပ်မံပြုလုပ်ပေးမည်ဖြစ်ပါသည်။ )
+        </p>
+        <div class="buttons-container">
+            <a href="/aboutus"><button class="btn">About Us</button></a>
+            <a href="/contact"><button class="btn">Contact Us</button></a>
+            <a href="/login" onclick="return confirmLogout()"><button class="btn">Log Out</button></a>
+            <script>
+                function confirmLogout() {
+                  return confirm("Are you sure you want to log out?");
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
